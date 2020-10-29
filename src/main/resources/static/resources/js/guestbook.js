@@ -1,6 +1,40 @@
 $(document).ready(function() {
 	'use strict';
 
+	$('.form-edit').click(function(){
+		const card = $(this.parentElement.parentElement);
+		const text = card.find(".entrytext");
+		const editBtn = card.find(".form-edit");
+		const saveBtn = card.find(".form-save");
+
+		editBtn.hide()
+		saveBtn.show()
+		text.attr('contenteditable','true');
+	})
+
+	$('.form-save').click(function(){
+		const card = $(this.parentElement.parentElement);
+		const text = card.find('.entrytext');
+		const editBtn = card.find('.form-edit');
+		const saveBtn = card.find('.form-save');
+
+		editBtn.show()
+		saveBtn.hide()
+		text.attr('contenteditable','false');
+
+		$.ajax({
+			type	: 'PATCH',
+			cache	: false,
+			url		: card.find('form').attr('action'),
+			data	: {
+				text: text.text()
+			},
+			success	: function(data) {
+				console.log('Debug: Update Successful')
+			}
+		});
+	})
+
 	$('#form').submit(function(e) {
 
 		if(!$('#use_ajax').is(':checked')) {

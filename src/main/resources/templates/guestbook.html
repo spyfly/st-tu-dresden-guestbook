@@ -34,8 +34,11 @@
 								<span class="fas fa-times"></span>
 							</button>
 						</form>
-						<button sec:authorize="hasRole('ADMIN')" th:title="#{guestbook.form.edit}" class="btn btn-sm float-right" id="form_edit">
+						<button sec:authorize="hasRole('ADMIN')" th:title="#{guestbook.form.edit}" class="btn btn-sm float-right form-edit">
 								<span class="fas fa-edit"></span>
+						</button>
+						<button style="display: none" sec:authorize="hasRole('ADMIN')" th:title="#{guestbook.form.edit.save}" class="btn btn-sm float-right form-save">
+							<span class="fas fa-save"></span>
 						</button>
 						<h4 th:text="${index} + '. ' + ${entry.name}" class="card-title">1. Posting</h4>
 					</div>
