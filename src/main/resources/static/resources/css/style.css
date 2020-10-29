@@ -15,6 +15,10 @@ div#entries, #form {
 	font-size: 0.8em;
 }
 
+.email {
+	font-size: 0.5em;
+}
+
 blockquote {
 	margin: 0;
 }

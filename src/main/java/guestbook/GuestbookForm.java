@@ -30,6 +30,7 @@ import javax.validation.constraints.NotBlank;
 class GuestbookForm {
 
 	private final @NotBlank String name;
+	private final @NotBlank String email;
 	private final @NotBlank String text;
 
 	/**
@@ -42,10 +43,11 @@ class GuestbookForm {
 	 * @param name the value to bind to {@code name}
 	 * @param text the value to bind to {@code text}
 	 */
-	public GuestbookForm(String name, String text) {
+	public GuestbookForm(String name, String email, String text) {
 
 		this.name = name;
 		this.text = text;
+		this.email = email;
 	}
 
 	/**
@@ -57,6 +59,17 @@ class GuestbookForm {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * Returns the value bound to the {@code name} attribute of the request. Needs to be public so that Spring will
+	 * actually consider it for form data binding until
+	 * {@link https://github.com/spring-projects/spring-framework/issues/22600} is resolved.
+	 *
+	 * @return the value bound to {@code name}
+	 */
+	public String getEmail() {
+		return email;
 	}
 
 	/**
@@ -77,6 +90,6 @@ class GuestbookForm {
 	 * @throws IllegalArgumentException if you call this on an instance without the name and text actually set.
 	 */
 	GuestbookEntry toNewEntry() {
-		return new GuestbookEntry(getName(), getText());
+		return new GuestbookEntry(getName(), getEmail(), getText());
 	}
 }
