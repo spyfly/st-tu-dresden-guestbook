@@ -34,6 +34,9 @@
 								<span class="fas fa-times"></span>
 							</button>
 						</form>
+						<button sec:authorize="hasRole('ADMIN')" th:title="#{guestbook.form.edit}" class="btn btn-sm float-right" id="form_edit">
+								<span class="fas fa-edit"></span>
+						</button>
 						<h4 th:text="${index} + '. ' + ${entry.name}" class="card-title">1. Posting</h4>
 					</div>
 					<div class="card-body">

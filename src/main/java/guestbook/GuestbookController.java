@@ -27,11 +27,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 /**
@@ -166,6 +162,25 @@ class GuestbookController {
 		return entry.map(it -> {
 
 			guestbook.delete(it);
+			return ResponseEntity.ok().build();
+
+		}).orElseGet(() -> ResponseEntity.notFound().build());
+	}
+
+	/**
+	 * Handles AJAX requests to modify {@link GuestbookEntry}s. Otherwise, this method is similar
+	 * to {@link #removeEntry(Optional)}.
+	 *
+	 * @param entry an {@link Optional} with the {@link GuestbookEntry} to modify
+	 * @return a response entity indicating success or failure of the modification
+	 */
+	@PatchMapping(path = "/guestbook/{entry}", headers = IS_AJAX_HEADER)
+	HttpEntity<?> updateEntry(@PathVariable Optional<GuestbookEntry> entry, @RequestParam String text) {
+
+		return entry.map(it -> {
+			Optional<GuestbookEntry> guestbookEntry = guestbook.findById(entry.get().getId());
+			guestbookEntry.get().setText(text);
+			guestbook.save(guestbookEntry.get());
 			return ResponseEntity.ok().build();
 
 		}).orElseGet(() -> ResponseEntity.notFound().build());

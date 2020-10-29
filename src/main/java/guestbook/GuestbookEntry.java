@@ -34,7 +34,8 @@ import org.springframework.util.Assert;
 class GuestbookEntry {
 
 	private @Id @GeneratedValue Long id;
-	private final String name, email, text;
+	private final String name, email;
+	private String text;
 	private final LocalDateTime date;
 
 	/**
@@ -79,5 +80,9 @@ class GuestbookEntry {
 
 	public String getText() {
 		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 }
